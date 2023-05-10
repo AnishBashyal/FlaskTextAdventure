@@ -1,0 +1,1 @@
+from textadventure import app

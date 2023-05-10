@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block body %}
+   
+    <form method="post" class="d-flex justify-content-center">
+        {{ form.hidden_tag() }}
+        <fieldset class="mb-3">
+            <legend class = "border-bottom mt-4 mb-4 text-center"> Log In </legend>
+            <div class="mb-3">
+                {{ form.username.label(class="form-label") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="form-control form-control-lg w-auto is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="form-control form-control-lg w-auto") }}
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control-lg w-auto is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control form-control-lg w-auto") }}
+                {% endif %}
+            </div>
+            <div class="form-check mb-3">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+            <div class="mb-3">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </fieldset>
+    </form>
+      
+{% endblock %}
