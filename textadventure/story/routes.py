@@ -51,13 +51,15 @@ def build_story(story_id):
             return redirect(url_for('story.build_story', story_id = story_id))
         
     if form_option.validate_on_submit():
-        next_story = StoryBody(writer_id = current_user.id)
+        option = Option(option = form_option.option.data, story_id = story_id)
+        db.session.add(option)
+        db.session.commit()
+    
+        next_story = StoryBody(writer_id = current_user.id, prev_id = option.id)
         db.session.add(next_story)
         db.session.commit()
 
-        option = Option(option = form_option.option.data, story_id = story_id, next_id = next_story.id)
-        db.session.add(option)
-        db.session.commit()
+       
         flash('Option added successfully', 'success')
         return redirect(url_for('story.build_story', story_id = story_id))
    

@@ -3,7 +3,7 @@
 {% block body %}
 
 {% if story.prev %}
-    <a class="btn btn-primary" role="button" href="{{ url_for('story.build_story', story_id = story.prev[0].story_id)}}">Back</a>
+    <a class="btn btn-primary" role="button" href="{{ url_for('story.build_story', story_id = story.prev.story_id)}}">Back</a>
 {% endif %}
     <form method="post" class="d-flex justify-content-center">
         {{ form_story.hidden_tag() }}
@@ -48,7 +48,7 @@
                     {{ form_old_option.submit(class="btn btn-outline-info") }}
                 </div>
                 <div class="mb-3">
-                    <a href="{{ url_for('story.build_story', story_id = options[loop.index0].next_id)}}">Next</a>
+                    <a href="{{ url_for('story.build_story', story_id = options[loop.index0].next[0].id)}}">Next</a>
                 </div>
             </fieldset>
         </form>

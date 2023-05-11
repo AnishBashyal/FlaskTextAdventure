@@ -28,7 +28,8 @@ class StoryHead(db.Model):
     
 class StoryBody(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    prev = db.relationship('Option', backref = 'next', lazy=True, foreign_keys = 'Option.next_id')
+    prev_id = db.Column(db.Integer, db.ForeignKey('option.id', use_alter=True), nullable = True)
+    # prev = db.relationship('Option', backref = 'next', lazy=True, foreign_keys = 'Option.next_id')
     story = db.Column(db.Text, nullable = False, default = "Keep Adding Stories")
     options = db.relationship('Option', backref = 'story', lazy=True, foreign_keys = 'Option.story_id', cascade = 'all, delete, delete-orphan')
     writer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
@@ -39,8 +40,9 @@ class StoryBody(db.Model):
 class Option(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     option = db.Column(db.Text, nullable = False)
-    story_id = db.Column(db.Integer, db.ForeignKey('story_body.id'), nullable = False)
-    next_id = db.Column(db.Integer, db.ForeignKey('story_body.id'), nullable = True)
+    story_id = db.Column(db.Integer, db.ForeignKey('story_body.id', use_alter=True), nullable = False)
+    next = db.relationship('StoryBody', backref = 'prev', lazy=True, foreign_keys = 'StoryBody.prev_id', cascade = 'all, delete, delete-orphan')
+    #next_id = db.Column(db.Integer, db.ForeignKey('story_body.id'), nullable = True)
     
     def __repr__(self):
         return f"Option('{self.id}', '{self.option}', '{self.story_id}', '{self.next}')"
