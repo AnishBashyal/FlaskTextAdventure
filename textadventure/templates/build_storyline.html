@@ -2,9 +2,10 @@
 
 {% block body %}
 
-{% if story.prev %}
-    <a class="btn btn-primary" role="button" href="{{ url_for('story.build_story', story_id = story.prev.story_id)}}">Back</a>
-{% endif %}
+    {% if story.prev %}
+        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.build_storyline', story_id = story.prev.story_id)}}">Back</a>
+    {% endif %}
+
     <form method="post" class="d-flex justify-content-center">
         {{ form_story.hidden_tag() }}
         <fieldset class="mb-3">
@@ -23,7 +24,7 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                {{ form_story.submit(class="btn btn-outline-info") }}
+                {{ form_story.submit(class="btn btn-secondary") }}
             </div>
         </fieldset>
     </form>
@@ -45,10 +46,10 @@
                     {% endif %}
                 </div>
                 <div class="mb-3">
-                    {{ form_old_option.submit(class="btn btn-outline-info") }}
-                </div>
-                <div class="mb-3">
-                    <a href="{{ url_for('story.build_story', story_id = options[loop.index0].next[0].id)}}">Next</a>
+                    {{ form_old_option.submit(class="btn btn-secondary") }}
+                    <a class="btn btn-outline-info mx-3" href="{{ url_for('story.build_storyline', story_id = options[loop.index0].next[0].id)}}">Next</a>
+                    <button class="btn btn-outline-danger" type = "submit" formaction="{{ url_for('story.delete_option', option_id = options[loop.index0].id) }}"> Delete</button>
+                    <!-- <a class="btn btn-outline-danger" href="{{ url_for('story.delete_option', option_id = options[loop.index0].id) }}">Delete</a> -->
                 </div>
             </fieldset>
         </form>
@@ -70,7 +71,7 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                {{ form_option.submit(class="btn btn-outline-info") }}
+                {{ form_option.submit(class="btn btn-success") }}
             </div>
         </fieldset>
     </form>

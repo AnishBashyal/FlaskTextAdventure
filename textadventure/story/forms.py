@@ -11,7 +11,7 @@ class CreateStoryForm(FlaskForm):
 
 class BuildStoryForm(FlaskForm):
     story = TextAreaField('Story', validators = [DataRequired()])
-    submit = SubmitField('Save')
+    submit = SubmitField('Update')
 
 class BuildOptionForm(FlaskForm):
     option = TextAreaField('Option', validators = [DataRequired()])

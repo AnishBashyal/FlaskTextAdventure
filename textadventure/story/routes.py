@@ -22,13 +22,13 @@ def new_story():
         db.session.add(story_head)
         db.session.commit()
         flash('Story created successfully', 'success')
-        return redirect(url_for('story.build_story', story_id = story_body.id))
+        return redirect(url_for('story.build_storyline', story_id = story_body.id))
     return render_template('new_story.html', form = form)
 
 
-@story.route('/story/build/<int:story_id>', methods = ['GET', 'POST'])
+@story.route('/storyline/build/<int:story_id>', methods = ['GET', 'POST'])
 @login_required
-def build_story(story_id):    
+def build_storyline(story_id):    
     story = StoryBody.query.get_or_404(story_id)
     options = story.options
     if story.writer_id != current_user.id:
@@ -49,7 +49,7 @@ def build_story(story_id):
             options[index].option = form_old_option.option.data
             db.session.commit()
             flash('Option updated successfully', 'success')
-            return redirect(url_for('story.build_story', story_id = story_id))
+            return redirect(url_for('story.build_storyline', story_id = story_id))
         
     if form_option.validate_on_submit():
         option = Option(option = form_option.option.data, story_id = story_id)
@@ -62,12 +62,27 @@ def build_story(story_id):
 
        
         flash('Option added successfully', 'success')
-        return redirect(url_for('story.build_story', story_id = story_id))
+        return redirect(url_for('story.build_storyline', story_id = story_id))
    
     if form_story.validate_on_submit():
         story.story = form_story.story.data
         db.session.commit()
-        flash('Story builded successfully', 'success')
-        return redirect(url_for('story.build_story', story_id = story_id))
+        flash('Story updated successfully', 'success')
+        return redirect(url_for('story.build_storyline', story_id = story_id))
 
-    return render_template('build_story.html', form_story=form_story, form_option = form_option,form_old_options = form_old_options ,options = options, story=story)
+    return render_template('build_storyline.html', form_story=form_story, form_option = form_option,form_old_options = form_old_options ,options = options, story=story)
+
+
+@story.route('/option/delete/<int:option_id>', methods = ['POST'])
+@login_required
+def delete_option(option_id):    
+    option = Option.query.get_or_404(option_id)
+    story = StoryBody.query.get_or_404(option.story_id)
+    if story.writer_id != current_user.id:
+        abort(403)
+
+    db.session.delete(option)
+    db.session.commit()
+    flash('Opion deleted successfully', 'success')
+    return redirect(url_for('story.build_storyline', story_id = option.story_id))
+
