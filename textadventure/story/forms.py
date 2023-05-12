@@ -15,4 +15,4 @@ class BuildStoryForm(FlaskForm):
 
 class BuildOptionForm(FlaskForm):
     option = TextAreaField('Option', validators = [DataRequired()])
-    submit = SubmitField('Save')
+    submit = SubmitField('Add')

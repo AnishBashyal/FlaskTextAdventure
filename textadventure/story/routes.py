@@ -34,13 +34,14 @@ def build_story(story_id):
     if story.writer_id != current_user.id:
         abort(403)
 
-    form_story = BuildStoryForm()
+    form_story = BuildStoryForm(obj = story)
     form_option = BuildOptionForm()
     form_old_options = []
 
     
     for option in options:
-        form_old_option = BuildOptionForm(prefix = f'{option.id}')
+        form_old_option = BuildOptionForm(prefix = f'{option.id}', obj = option)
+        form_old_option.submit.label.text = 'Update'
         form_old_options.append(form_old_option)
 
     for index, form_old_option in enumerate(form_old_options):
@@ -69,7 +70,4 @@ def build_story(story_id):
         flash('Story builded successfully', 'success')
         return redirect(url_for('story.build_story', story_id = story_id))
 
-    for index,option in enumerate(options):
-        form_old_options[index].option.data = option.option
-    form_story.story.data = story.story
     return render_template('build_story.html', form_story=form_story, form_option = form_option,form_old_options = form_old_options ,options = options, story=story)
