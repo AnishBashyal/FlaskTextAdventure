@@ -3,9 +3,9 @@
 {% block body %}
 
     {% if story.prev %}
-        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.build_storyline', story_id = story.prev.story_id)}}">Back</a>
+        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.build_storyline', story_id = story.prev.story_id)}}">Prev</a>
     {% else %}
-        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.update_story', story_id = head_id)}}">Back</a>
+        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.update_story', story_id = head_id)}}">Prev</a>
     {% endif %}
 
     <form method="post" class="d-flex justify-content-center">
