@@ -1,33 +1,42 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h1>
-        Story
-    </h1>
-    <div class="container m-5">
-        <img class = "rounded-circle" src="{{ url_for('static', filename = 'profile_pics/' + story.writer.profile_pic) }}" alt="Profile Picture">
-        <a href="{{ url_for('user.user_stories', username = story.writer.username )}}">     
-            <h4> Creator : {{ story.writer.username }}</h4>
-        </a>
-        <h5>Date Created : {{ story.date_created.strftime('%Y-%m-%d')}}</h3>
-        <h3> Title : {{ story.title }} </h3>
-        <h4> Theme : {{ story.theme }} </h4>
-        <div class="d-flex flex-row">
-            <div class="p-2 mt-2">
-              <a class="btn btn-success" href="{{ url_for('story.storyline', story_id=story.next) }}">Play</a>
+
+  <div class="text-center my-5">
+    <h1> Story </h1>
+  </div>
+  <div class="container d-flex justify-content-center">
+    <div class="card my-5 shadow-lg text-white bg-dark">
+        <div class="card-header d-flex justify-content-between">
+            <img class="p-2  story-img rounded-circle"
+                src="{{ url_for('static', filename = 'profile_pics/' + story.writer.profile_pic) }}"
+                alt="Profile Picture">
+            <div class="d-flex flex-column ">
+                <a href="{{ url_for('user.user_stories', username = story.writer.username )}}">
+                    {{ story.writer.username }}
+                </a>
+                <small class="text-muted">{{ story.date_created.strftime('%Y-%m-%d')}} </small>
             </div>
-            
-            {% if current_user == story.writer %}
-            <div class="p-2 mt-2">
-              <a class="btn btn-dark" href="{{ url_for('story.update_story', story_id=story.id) }}">Update</a>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="card-title m-3" style="color:rgb(0, 180, 251)"> {{ story.title }}</h5>
+            <p class="card-text mt-4 mb-5"> {{ story.theme }}</p>
+            <div class="d-flex flex-row justify-content-center">
+              <div class="p-2 mt-2">
+                <a href="{{ url_for('story.storyline', story_id = story.next ) }}" class="btn btn-success">Play</a>
+              </div>
+              {% if current_user == story.writer %}
+                <div class="p-2 mt-2">
+                  <a class="btn btn-light" href="{{ url_for('story.update_story', story_id=story.id) }}">Update</a>
+                </div>
+                <div class="p-2 mt-2">
+                  <form action="{{ url_for('story.delete_story', story_id=story.id) }}" method="post">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                  </form>
+                </div>
+              {% endif %}
             </div>
-            
-            <div class="p-2 mt-2">
-              <form action="{{ url_for('story.delete_story', story_id=story.id) }}" method="post">
-                <input class="btn btn-danger" type="submit" value="Delete">
-              </form>
-            </div>
-            {% endif %}
         </div>
     </div>
+  </div>
 {% endblock %}

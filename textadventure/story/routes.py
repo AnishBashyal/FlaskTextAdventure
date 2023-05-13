@@ -10,7 +10,7 @@ story = Blueprint('story', __name__)
 def stories():
     page = request.args.get('page', 1, type=int)
     stories = StoryHead.query.order_by(StoryHead.date_created.desc())\
-                    .paginate(page = page, per_page = 2)
+                    .paginate(page = page, per_page = 4)
     return render_template('stories.html', stories = stories)
 
 @story.route('/story/<int:story_id>')

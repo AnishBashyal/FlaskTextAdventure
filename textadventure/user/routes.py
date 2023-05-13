@@ -70,5 +70,5 @@ def user_stories(username):
     user = User.query.filter_by(username = username).first_or_404()
     stories = StoryHead.query.filter_by(writer=user)\
         .order_by(StoryHead.date_created.desc())\
-        .paginate(page = page, per_page = 2 )
+        .paginate(page = page, per_page = 4 )
     return render_template('user_stories.html', stories = stories, user = user)
