@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from textadventure import db, bcrypt
 from textadventure.user.forms import RegistrationForm, LoginForm, UpdateAcccountForm
-from textadventure.models import User
+from textadventure.models import User, StoryHead
 from textadventure.user.utils import save_profile_pic
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -63,3 +63,12 @@ def account():
         form.username.data = current_user.username
         
     return render_template('account.html', profile_pic = profile_pic, form=form)
+
+@user.route("/user/stories/<string:username>")
+def user_stories(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username = username).first_or_404()
+    stories = StoryHead.query.filter_by(writer=user)\
+        .order_by(StoryHead.date_created.desc())\
+        .paginate(page = page, per_page = 2 )
+    return render_template('user_stories.html', stories = stories, user = user)

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>
+        StoryLine
+    </h1>
+    <div class="d-flex flex-row">
+        <div class="p-3 mt-2">
+            <h2> {{story.story}}</h2>
+        </div>
+        {% if story.writer_id == current_user.id %}
+            <div class="p-3 mt-2">
+                <a class="btn btn-outline-secondary" href="{{ url_for('story.build_storyline', story_id=story.id) }}">Edit</a>
+            </div>
+        {% endif %}
+        
+    </div>
+    {% if story.prev %}
+        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.storyline', story_id = story.prev.story_id)}}"><h5> &#x2190;  </h5></a>
+    {% else %}
+        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.view_story', story_id = head_id)}}"><h5> &#x2190;  </h5></a>
+    {% endif %}
+    {% for option in options %}
+        <a class="btn btn-dark" role = "button" href="{{ url_for( 'story.storyline', story_id = option.next[0].id )}}"> {{ option.option }} </a>
+    {% endfor %}
+{% endblock %}

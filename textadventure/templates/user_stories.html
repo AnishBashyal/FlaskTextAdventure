@@ -2,13 +2,13 @@
 
 {% block body %}
 
-    <h1> Stories</h1>
+    <h1> Written by {{ user.username }}... a total of {{ stories.total }} stories. </h1>
 
     {% for story in stories %}
     <div class="container m-5">
-        <img class = "rounded-circle" src="{{ url_for('static', filename = 'profile_pics/' + story.writer.profile_pic) }}" alt="Profile Picture">
-        <a href="{{ url_for('user.user_stories', username = story.writer.username )}}">     
-            <h4> Creator : {{ story.writer.username }}</h4>
+        <img class = "rounded-circle" src="{{ url_for('static', filename = 'profile_pics/' + user.profile_pic) }}" alt="Profile Picture">
+        <a href="{{ url_for('user.user_stories', username = user.username )}}">     
+            <h4> Creator : {{ user.username }}</h4>
         </a>
         <h5>Date Created : {{ story.date_created.strftime('%Y-%m-%d')}}</h3>
         <h3> <a href="{{ url_for('story.view_story', story_id = story.id ) }}"> Title : {{ story.title }}</a></h3>
@@ -19,9 +19,9 @@
     {% for page_num in stories.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
         {% if page_num %}
             {% if stories.page == page_num %}
-                <a class="btn btn-dark mt-4" href="{{ url_for('story.stories',page=page_num) }}"> {{ page_num }}</a>
+                <a class="btn btn-dark mt-4" href="{{ url_for('user.user_stories',page=page_num, username = user.username) }}"> {{ page_num }}</a>
             {% else %}
-                <a class="btn btn-outline-dark mt-4" href="{{ url_for('story.stories',page=page_num) }}"> {{ page_num }}</a>
+                <a class="btn btn-outline-dark mt-4" href="{{ url_for('user.user_stories',page=page_num, username = user.username) }}"> {{ page_num }}</a>
             {% endif %}
         {% else %}
             ....

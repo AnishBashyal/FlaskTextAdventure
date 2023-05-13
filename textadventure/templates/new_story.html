@@ -5,7 +5,7 @@
     <form method="post" class="d-flex justify-content-center">
         {{ form.hidden_tag() }}
         <fieldset class="mb-3">
-            <legend class = "border-bottom mt-4 mb-4 text-center"> New Story </legend>
+            <legend class = "border-bottom mt-4 mb-4 text-center"> {% if story %} Update  {% else %} New {% endif %} Story</legend>
             <div class="mb-3">
                 {{ form.title.label(class="form-label") }}
                 {% if form.title.errors %}
@@ -33,7 +33,10 @@
                 {% endif %}
             </div>
             <div class="mb-3">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.submit(class="btn btn-success") }}
+                {% if story %}
+                    <a class="btn btn-outline-dark" role = "button" href="{{ url_for( 'story.build_storyline', story_id = story.next)}}"> Next </a>
+                {% endif %}
             </div>
         </fieldset>
     </form>

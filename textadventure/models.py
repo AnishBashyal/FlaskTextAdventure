@@ -1,3 +1,4 @@
+from datetime import datetime
 from textadventure import db, login_manager
 from flask_login import UserMixin
 
@@ -20,17 +21,18 @@ class StoryHead(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.Text, nullable = False)
     theme = db.Column(db.Text, nullable = False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     writer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
     next = db.Column(db.Integer, db.ForeignKey('story_body.id'), nullable = False)
 
     def __repr__(self):
-        return f"Story Head('{self.id}', '{self.title}', '{self.theme}', '{self.next}')"
+        return f"Story Head('{self.id}', '{self.title}', '{self.theme}', '{self.next}', '{self.date_created}')"
     
 class StoryBody(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     prev_id = db.Column(db.Integer, db.ForeignKey('option.id', use_alter=True), nullable = True)
     # prev = db.relationship('Option', backref = 'next', lazy=True, foreign_keys = 'Option.next_id')
-    story = db.Column(db.Text, nullable = False, default = "Keep Adding Stories")
+    story = db.Column(db.Text, nullable = False, default = "Story in progress...")
     options = db.relationship('Option', backref = 'story', lazy=True, foreign_keys = 'Option.story_id', cascade = 'all, delete, delete-orphan')
     writer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 

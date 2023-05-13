@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>
+        Story
+    </h1>
+    <div class="container m-5">
+        <img class = "rounded-circle" src="{{ url_for('static', filename = 'profile_pics/' + story.writer.profile_pic) }}" alt="Profile Picture">
+        <a href="{{ url_for('user.user_stories', username = story.writer.username )}}">     
+            <h4> Creator : {{ story.writer.username }}</h4>
+        </a>
+        <h5>Date Created : {{ story.date_created.strftime('%Y-%m-%d')}}</h3>
+        <h3> Title : {{ story.title }} </h3>
+        <h4> Theme : {{ story.theme }} </h4>
+        <div class="d-flex flex-row">
+            <div class="p-2 mt-2">
+              <a class="btn btn-success" href="{{ url_for('story.storyline', story_id=story.next) }}">Play</a>
+            </div>
+            
+            {% if current_user == story.writer %}
+            <div class="p-2 mt-2">
+              <a class="btn btn-dark" href="{{ url_for('story.update_story', story_id=story.id) }}">Update</a>
+            </div>
+            
+            <div class="p-2 mt-2">
+              <form action="{{ url_for('story.delete_story', story_id=story.id) }}" method="post">
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

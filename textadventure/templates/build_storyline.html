@@ -4,6 +4,8 @@
 
     {% if story.prev %}
         <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.build_storyline', story_id = story.prev.story_id)}}">Back</a>
+    {% else %}
+        <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.update_story', story_id = head_id)}}">Back</a>
     {% endif %}
 
     <form method="post" class="d-flex justify-content-center">
@@ -25,6 +27,7 @@
             </div>
             <div class="mb-3">
                 {{ form_story.submit(class="btn btn-secondary") }}
+                <a class = "btn btn-outline-dark mx-3" href="{{ url_for('story.storyline', story_id = story.id ) }}"> View </a>
             </div>
         </fieldset>
     </form>
