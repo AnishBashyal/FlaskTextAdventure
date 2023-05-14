@@ -35,7 +35,8 @@ class StoryBody(db.Model):
     story = db.Column(db.Text, nullable = False, default = "Story in progress...")
     options = db.relationship('Option', backref = 'story', lazy=True, foreign_keys = 'Option.story_id', cascade = 'all, delete, delete-orphan')
     writer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-
+    is_win = db.Column(db.Boolean, nullable = False, default = False)
+    is_lose = db.Column(db.Boolean, nullable = False, default = False)
     def __repr__(self):
         return f"(' Story : {self.story}', Options : {self.options})"
 

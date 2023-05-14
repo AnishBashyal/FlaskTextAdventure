@@ -22,17 +22,37 @@
         <div class="card-body text-center">
             <h2 class="card-title m-md-5"> {{ story.story }}</h2>
             <hr>
-            <div class="row row-cols-1 row-cols-md-2 g-5 my-2 justify-content-evenly">
-            {% for option in options %}
-                <div class="col">
-                    <a class="btn btn-outline-light" href="{{ url_for( 'story.storyline', story_id = option.next[0].id )}}">
-                        <h5 class="card-text mt-4 m-md-4 p-md-2"> 
-                            {{option.option}}
-                        </h5>
-                    </a>
+            {% if story.is_win %}
+                <h2 class="card-text m-5 text-success"> 
+                    Congratulations! You won the game!
+                </h2>
+                <a class="btn btn-outline-light mt-4 mb-5" href="{{url_for('story.stories')}}">
+                    <h5 class="card-text p-2"> 
+                        Try another
+                    </h5>
+                </a>
+            {% elif story.is_lose %}
+                <h2 class="card-text m-5 text-danger"> 
+                    Too bad... you lost!
+                </h2>
+                <a class="btn btn-outline-light mt-4 mb-5" href="{{url_for('story.stories')}}">
+                    <h5 class="card-text p-2"> 
+                        Play some more!
+                    </h5>
+                </a>
+            {% else %}
+                <div class="row row-cols-1 row-cols-md-2 g-5 my-2 justify-content-evenly">
+                {% for option in options %}
+                    <div class="col">
+                        <a class="btn btn-outline-light" href="{{ url_for( 'story.storyline', story_id = option.next[0].id )}}">
+                            <h5 class="card-text mt-4 m-md-4 p-md-2"> 
+                                {{option.option}}
+                            </h5>
+                        </a>
+                    </div>
+                {% endfor %}
                 </div>
-            {% endfor %}
-            </div>
+            {% endif %}
         </div>
     </div>
   </div>

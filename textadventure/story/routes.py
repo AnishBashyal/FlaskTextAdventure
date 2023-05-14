@@ -80,28 +80,28 @@ def storyline(story_id):
 def build_storyline(story_id):    
     story = StoryBody.query.get_or_404(story_id)
     head = StoryHead.query.filter_by(next = story_id).first()
-    print(head)
     options = story.options
+
     if story.writer_id != current_user.id:
         abort(403)
 
     form_story = BuildStoryForm(obj = story)
-    form_option = BuildOptionForm()
+    form_option = BuildOptionForm(prefix = '1')
     form_old_options = []
-
     
+    if form_story.validate_on_submit():
+        story.story = form_story.story.data
+        story.is_win = form_story.is_last.data == 'win'
+        story.is_lose = form_story.is_last.data == 'lose'
+        db.session.commit()
+        flash('Storyline updated successfully', 'success')
+        return redirect(url_for('story.build_storyline', story_id = story_id))
+
     for option in options:
         form_old_option = BuildOptionForm(prefix = f'{option.id}', obj = option)
         form_old_option.submit.label.text = 'Update'
         form_old_options.append(form_old_option)
 
-    for index, form_old_option in enumerate(form_old_options):
-        if form_old_option.validate_on_submit():
-            options[index].option = form_old_option.option.data
-            db.session.commit()
-            flash('Option updated successfully', 'success')
-            return redirect(url_for('story.build_storyline', story_id = story_id))
-        
     if form_option.validate_on_submit():
         option = Option(option = form_option.option.data, story_id = story_id)
         db.session.add(option)
@@ -110,16 +110,18 @@ def build_storyline(story_id):
         next_story = StoryBody(writer_id = current_user.id, prev_id = option.id)
         db.session.add(next_story)
         db.session.commit()
-
-       
         flash('Option added successfully', 'success')
         return redirect(url_for('story.build_storyline', story_id = story_id))
+    
    
-    if form_story.validate_on_submit():
-        story.story = form_story.story.data
-        db.session.commit()
-        flash('Storyline updated successfully', 'success')
-        return redirect(url_for('story.build_storyline', story_id = story_id))
+    for index, form_old_option in enumerate(form_old_options):
+        if form_old_option.validate_on_submit():
+            options[index].option = form_old_option.option.data
+            db.session.commit()
+            flash('Option updated successfully', 'success')
+            return redirect(url_for('story.build_storyline', story_id = story_id))
+        
+    form_story.is_last.data = 'win' if story.is_win else 'lose' if story.is_lose else 'none'
 
     return render_template('build_storyline.html', form_story=form_story, 
                            form_option = form_option, form_old_options = form_old_options, 
