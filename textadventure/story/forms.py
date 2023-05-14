@@ -11,7 +11,7 @@ class CreateStoryForm(FlaskForm):
 class BuildStoryForm(FlaskForm):
     story = TextAreaField('Story', validators = [DataRequired()])
     submit = SubmitField('Update')
-    is_last = RadioField(choices = [('win', 'Is Winning Scene?'), ('lose', 'Is Losing Scene?'), ('none', 'None')], default='none')
+    is_last = RadioField(choices = [('win', 'Win?'), ('lose', 'Lose?'), ('none', 'None')], default='none')
 
 class BuildOptionForm(FlaskForm):
     option = TextAreaField('Option', validators = [DataRequired()])

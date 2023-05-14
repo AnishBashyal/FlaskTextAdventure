@@ -7,7 +7,6 @@
     {% else %}
         <a class="btn btn-outline-dark m-2" role="button" href="{{ url_for('story.update_story', story_id = head_id)}}">Prev</a>
     {% endif %}
-
     <form method="post" class="d-flex justify-content-center">
         {{ form_story.hidden_tag() }}
         <fieldset class="mb-3">
