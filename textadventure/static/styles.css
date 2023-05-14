@@ -1,0 +1,24 @@
+.card {
+    width: 900px;
+    min-width: fit-content;
+    max-width: 100%
+}
+
+.story-img {
+    width: 65px;
+    height: 65px;
+}
+
+.account-img {
+    width: 125px;
+    height: 125px;
+}
+
+a {
+    color:  rgb(0, 180, 251) ; /* Customize the link color */
+    text-decoration:none;
+}
+
+a:hover {
+    color: #0b7ced; /* Customize the link color on hover */
+}
