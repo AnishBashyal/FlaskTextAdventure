@@ -1,7 +1,6 @@
 # FlaskTextAdventure
 
-Create your own text adventure game using the UI or play what others have made...
-
+Create your own text adventure game using the UI or play what others have made... Now I realize the many taken-for-granted features Unity Game Engine provided when implementing the [same](https://github.com/AnishBashyal/TextAdventure).
 
 ![image](https://github.com/AnishBashyal/FlaskTextAdventure/assets/53051451/68d48bc7-9827-48a2-a44f-ba023bff8536)
 ![Screenshot from 2023-05-16 14-15-16](https://github.com/AnishBashyal/FlaskTextAdventure/assets/53051451/8e98e8fd-d71c-4d56-b341-879cccaea10b)
