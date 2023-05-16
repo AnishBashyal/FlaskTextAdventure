@@ -18,10 +18,10 @@ login_manager.login_message_category = 'info'
 from textadventure.main.routes import main
 from textadventure.user.routes import user
 from textadventure.story.routes import story
+from textadventure.errors.handlers import errors
 
 app.register_blueprint(main)
 app.register_blueprint(user)
 app.register_blueprint(story)
-
-
+app.register_blueprint(errors)
 
