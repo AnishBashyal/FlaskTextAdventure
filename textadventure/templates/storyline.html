@@ -15,9 +15,11 @@
                 </a>
             {% endif %}
             
+            {% if current_user.is_authenticated and current_user.id == story.writer_id %}
             <a class="mx-md-3" href="{{ url_for('story.build_storyline', story_id=story.id) }}">
                <h1>  &#x270E;  </h1>
-            </a>            
+            </a> 
+            {% endif %}           
         </div>
         <div class="card-body text-center">
             <h2 class="card-title m-md-5"> {{ story.story }}</h2>
@@ -40,7 +42,7 @@
                         Play some more!
                     </h5>
                 </a>
-            {% else %}
+            {% elif options %}
                 <div class="row row-cols-1 row-cols-md-2 g-5 my-2 justify-content-evenly">
                 {% for option in options %}
                     <div class="col">
@@ -52,6 +54,10 @@
                     </div>
                 {% endfor %}
                 </div>
+            {% else %}
+            <h2 class="card-text m-5 text-warning"> 
+                Dead End
+            </h2>
             {% endif %}
         </div>
     </div>
