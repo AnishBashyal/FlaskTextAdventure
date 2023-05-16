@@ -15,10 +15,22 @@
 }
 
 a {
-    color:  rgb(0, 180, 251) ; /* Customize the link color */
+    color:  rgb(0, 180, 251) ; 
     text-decoration:none;
 }
 
 a:hover {
-    color: #0b7ced; /* Customize the link color on hover */
+    color: #0b7ced; 
 }
+
+@media (max-width: 768px) { 
+    .textbox {
+      width: 90%;
+    }
+  }
+
+  @media (min-width: 768px) { 
+    .textbox {
+      width: 50%;
+    }
+  }

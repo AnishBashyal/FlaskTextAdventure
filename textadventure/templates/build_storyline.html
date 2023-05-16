@@ -9,26 +9,26 @@
     {% endif %}
     <form method="post" class="d-flex justify-content-center">
         {{ form_story.hidden_tag() }}
-        <fieldset class="mb-3">
+        <fieldset class="mb-3 textbox">
             <legend class = "border-bottom mt-4 mb-4 text-center"> Build Story </legend>
             <div class="mb-3">
                 {{ form_story.story.label(class="form-label") }}
                 {% if form_story.story.errors %}
-                    {{ form_story.story(class="form-control form-control-lg w-auto is-invalid") }}
+                    {{ form_story.story(rows=5,class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form_story.story.errors %}
                             <span> {{ error }} </span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form_story.story(class="form-control form-control-lg w-auto") }}
+                    {{ form_story.story(rows=5,class="form-control form-control-lg") }}
                 {% endif %}
             </div>
             <div class="mb-3 d-flex flex-row">
-                {% for option in form_story.is_last %}
+                {% for choice in form_story.is_last %}
                     <div class="form-check mx-2">
-                        {{option(class="form-check-input", onclick="handleRadioButtonClick(this)")}}
-                        {{ option.label(class="form-check-label")}}
+                        {{choice(class="form-check-input", onclick="handleRadioButtonClick(this)")}}
+                        {{ choice.label(class="form-check-label")}}
                     </div>
                 {% endfor %}
             </div>
@@ -43,45 +43,49 @@
     {% else %}
         <div id="formOptionSection">
     {% endif %}
+    <div class="row row-cols-1 row-cols-md-2 my-5 justify-content-center">
         {% for form_old_option in form_old_options %}
-            <form method="post" class="d-flex justify-content-center">
-                {{ form_old_option.hidden_tag() }}
-                <fieldset class="mb-3">
-                    <div class="mb-3">
-                        {{ form_old_option.option.label(class="form-label") }}
-                        {% if form_old_option.option.errors %}
-                            {{ form_old_option.option(class="form-control form-control-lg w-auto is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form_old_option.option.errors %}
-                                    <span> {{ error }} </span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form_old_option.option(class="form-control form-control-lg w-auto") }}
-                        {% endif %}
-                    </div>
-                    <div class="mb-3">
-                        {{ form_old_option.submit(class="btn btn-secondary") }}
-                        <a class="btn btn-outline-info mx-3" href="{{ url_for('story.build_storyline', story_id = options[loop.index0].next[0].id)}}">Next</a>
-                        <button class="btn btn-outline-danger" type = "submit" formaction="{{ url_for('story.delete_option', option_id = options[loop.index0].id) }}"> Delete</button>
-                    </div>
-                </fieldset>
-            </form>
+            <div class="col">
+                <form method="post" class="d-flex justify-content-center">
+                    {{ form_old_option.hidden_tag() }}
+                    <fieldset class="mb-5 w-75">
+                        <div class="mb-3">
+                            {{ form_old_option.option.label(class="form-label") }}
+                            {% if form_old_option.option.errors %}
+                                {{ form_old_option.option(rows=3, class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_old_option.option.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_old_option.option(rows=3, class="form-control form-control-lg ") }}
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_old_option.submit(class="btn btn-secondary") }}
+                            <a class="btn btn-outline-info mx-3" href="{{ url_for('story.build_storyline', story_id = options[loop.index0].next[0].id)}}">Next</a>
+                            <button class="btn btn-outline-danger" type = "submit" formaction="{{ url_for('story.delete_option', option_id = options[loop.index0].id) }}"> Delete</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
         {% endfor %}
+        </div>
         <form method="post" class="d-flex justify-content-center">
             {{ form_option.hidden_tag() }}
-            <fieldset class="mb-3">
+            <fieldset class="mb-4">
                 <div class="mb-3">
                     {{ form_option.option.label(class="form-label") }}
                     {% if form_option.option.errors %}
-                        {{ form_option.option(class="form-control form-control-lg w-auto is-invalid") }}
+                        {{ form_option.option(rows=3, class="form-control form-control-lg w-auto is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form_option.option.errors %}
                                 <span> {{ error }} </span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form_option.option(class="form-control form-control-lg w-auto") }}
+                        {{ form_option.option(rows=3, class="form-control form-control-lg w-auto") }}
                     {% endif %}
                 </div>
                 <div class="mb-3">

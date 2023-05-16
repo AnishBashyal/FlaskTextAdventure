@@ -42,7 +42,7 @@ def update_story(story_id):
         story.theme = form.theme.data
         db.session.commit()
         flash('Story updated successfully!', 'success')
-        return redirect(url_for('story.view_story', story_id = story_id))
+        # return redirect(url_for('story.view_story', story_id = story_id))
     
     #elif request.method == 'GET'
     form.submit.label.text = 'Update'
@@ -58,7 +58,7 @@ def new_story():
         story_body = StoryBody(writer_id = current_user.id)
         db.session.add(story_body)
         db.session.commit()
-        story_head = StoryHead(title=form.title.data, theme = form.title.data, 
+        story_head = StoryHead(title=form.title.data, theme = form.theme.data, 
                                writer = current_user, next=story_body.id)
         db.session.add(story_head)
         db.session.commit()
@@ -86,7 +86,7 @@ def build_storyline(story_id):
         abort(403)
 
     form_story = BuildStoryForm(obj = story)
-    form_option = BuildOptionForm(prefix = '1')
+    form_option = BuildOptionForm(prefix = '0')
     form_old_options = []
     
     if form_story.validate_on_submit():
