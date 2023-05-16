@@ -62,35 +62,5 @@
         </div>
     </div>
   </div>
-<!-- <div class="container d-flex justify-content-center">
-    <div class="card my-5 shadow-lg text-white bg-dark">
-        <div class="card-header d-flex justify-content-between text-center">
-            {% if story.prev %}
-                <a class="mx-md-3" href="{{ url_for('story.storyline', story_id = story.prev.story_id)}}">
-                    <h1> &#x2190;  </h1>
-                </a>
-            {% else %}
-                <a class="mx-md-3" href="{{ url_for('story.view_story', story_id = head_id)}}">
-                    <h1> &#x2190;  </h1>
-                </a>
-            {% endif %}
-            <h2 class="p-md-4 m-md-3 mt-5"> {{story.story}}</h2>
-            <a class="mx-md-3" href="{{ url_for('story.build_storyline', story_id=story.id) }}">
-               <h1> &#x270E; </h1>
-            </a>    
-        </div>
-        <div class="card-body text-center">
-            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-evenly">
-                {% for option in options %}
-                    <div class="col">
-                        <a class="w-75 w-md-100 p-2 p-md-3 mt-4 btn btn-outline-light" role = "button" href="{{ url_for( 'story.storyline', story_id = option.next[0].id )}}">
-                            {{ option.option }} 
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-  </div> -->
 
 {% endblock %}

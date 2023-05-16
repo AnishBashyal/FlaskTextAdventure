@@ -64,7 +64,6 @@
                         {{ form_old_option.submit(class="btn btn-secondary") }}
                         <a class="btn btn-outline-info mx-3" href="{{ url_for('story.build_storyline', story_id = options[loop.index0].next[0].id)}}">Next</a>
                         <button class="btn btn-outline-danger" type = "submit" formaction="{{ url_for('story.delete_option', option_id = options[loop.index0].id) }}"> Delete</button>
-                        <!-- <a class="btn btn-outline-danger" href="{{ url_for('story.delete_option', option_id = options[loop.index0].id) }}">Delete</a> -->
                     </div>
                 </fieldset>
             </form>
